@@ -3,7 +3,7 @@ const router = express.Router();
 
 /* post: new rewarder activation notification */
 router.post('/', async function(req, res, next) {
-  res.send(req.body)
+  await res.json(req.body)
 });
 
 module.exports = router;
