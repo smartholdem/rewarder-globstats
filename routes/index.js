@@ -47,6 +47,10 @@ router.post('/', async function (req, res, next) {
     await res.json(req.body);
 });
 
+router.get('/delegates', async function (req, res, next) {
+    await res.json(await dbUtils.dbArray(db, '0', '1'));
+});
+
 
 /** read objs by keys **/
 router.get('/db/:from/:to', async function (req, res, next) {
