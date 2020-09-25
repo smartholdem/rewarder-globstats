@@ -36,6 +36,7 @@ router.post('/', async function (req, res, next) {
     let verification = await helper.verifyMessage(req.body.rndString, req.body.info.delegate.publicKey, req.body.sig);
     console.log('verification', verification);
     if (verification) {
+        req.body.info.ip = ipArr[ipArr.length - 1];
         await db.put('0x' + req.body.info.delegate.address, req.body.info);
     }
     await res.json(req.body)
