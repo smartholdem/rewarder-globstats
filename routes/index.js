@@ -9,7 +9,6 @@ const DbUtils = require('../modules/dbUtils');
 const dbUtils = new DbUtils();
 
 // 0x - active delegates reward
-// 1x -
 
 class Helper {
     async verifyMessage(message, publicKey, signature) {
@@ -38,6 +37,7 @@ router.post('/', async function (req, res, next) {
     let verification = await helper.verifyMessage(req.body.rndString, req.body.info.delegate.publicKey, req.body.sig);
     console.log('verification', verification);
     if (verification) {
+        req.body.info.timestamp = Math.floor(Date.now() / 1000);
         req.body.info.net = {
           ip: ipArr[ipArr.length - 1],
           port: req.body.info.delegate.port
