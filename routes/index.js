@@ -5,6 +5,8 @@ const level = require("level");
 const axios = require('axios');
 const db = level('./.db', {valueEncoding: 'json'});
 const crypto = require("crypto");
+const DbUtils = require('../modules/dbUtils');
+const dbUtils = new DbUtils();
 
 // 0x - active delegates reward
 // 1x -
@@ -36,10 +38,20 @@ router.post('/', async function (req, res, next) {
     let verification = await helper.verifyMessage(req.body.rndString, req.body.info.delegate.publicKey, req.body.sig);
     console.log('verification', verification);
     if (verification) {
-        req.body.info.ip = ipArr[ipArr.length - 1];
+        req.body.info.net = {
+          ip: ipArr[ipArr.length - 1],
+          port: req.body.info.delegate.port
+        };
         await db.put('0x' + req.body.info.delegate.address, req.body.info);
     }
-    await res.json(req.body)
+    await res.json(req.body);
 });
+
+
+/** read objs by keys **/
+router.get('/db/:from/:to', async function (req, res, next) {
+    await res.json(await dbUtils.dbObj(db, req.params["from"], req.params["to"]));
+});
+
 
 module.exports = router;
