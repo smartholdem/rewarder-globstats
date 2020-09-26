@@ -43,7 +43,7 @@ const helper = new Helper();
 
 /** CRON Delegate set inactive **/
 schedule.scheduleJob("1 */20 * * * *", async () => {
-
+    await helper.validateDelegate();
 });
 
 /* post: new rewarder activation notification */
