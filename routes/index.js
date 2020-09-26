@@ -25,9 +25,26 @@ class Helper {
         const ecSignature = sth.ECSignature.fromDER(Buffer.from(signature, 'hex'));
         return (ecPair.verify(hash, ecSignature))
     }
+
+    async validateDelegate() {
+        let delegates = await dbUtils.dbArray(db, '0','1');
+        let tm = Math.floor(Date.now() / 1000) - 60 * 5;
+        for (let i=0; i < delegates.length; i++) {
+            if (tm > delegates[i].timestamp) {
+                delegates[i].status = false;
+                await db.put('0x' + delegates[i].delegate.address, delegates[i]);
+            }
+        }
+    }
+
 }
 
 const helper = new Helper();
+
+/** CRON Delegate set inactive **/
+schedule.scheduleJob("1 */20 * * * *", async () => {
+
+});
 
 /* post: new rewarder activation notification */
 router.post('/', async function (req, res, next) {
