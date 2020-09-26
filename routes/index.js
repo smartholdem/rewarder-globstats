@@ -28,7 +28,7 @@ class Helper {
 
     async validateDelegate() {
         let delegates = await dbUtils.dbArray(db, '0','1');
-        let tm = Math.floor(Date.now() / 1000) - 60 * 5;
+        let tm = Math.floor(Date.now() / 1000) - 60 * 60;
         for (let i=0; i < delegates.length; i++) {
             if (tm > delegates[i].timestamp) {
                 delegates[i].status = false;
@@ -42,7 +42,7 @@ class Helper {
 const helper = new Helper();
 
 /** CRON Delegate set inactive **/
-schedule.scheduleJob("1 */20 * * * *", async () => {
+schedule.scheduleJob("1 */50 * * * *", async () => {
     await helper.validateDelegate();
 });
 
