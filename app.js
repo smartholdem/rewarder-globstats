@@ -3,6 +3,12 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
+const jsonFile = require('jsonfile');
+const port = jsonFile.readFileSync('./config.json').port; // конфиг
+
+process.env.PORT = port;
+console.log("Running on port:", process.env.PORT);
+
 const indexRouter = require('./routes/index');
 const delegatesRouter = require('./routes/delegates');
 const apiRouter = require('./routes/api');
