@@ -7,6 +7,7 @@ const db = level('./.db', {valueEncoding: 'json'});
 const crypto = require("crypto");
 const DbUtils = require('../modules/dbUtils');
 const dbUtils = new DbUtils();
+const schedule = require('node-schedule');
 
 // 0x - active delegates reward
 
