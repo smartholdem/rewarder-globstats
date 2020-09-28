@@ -28,7 +28,7 @@ class Helper {
 
     async validateDelegate() {
         let delegates = await dbUtils.dbArray(db, '0','1');
-        let tm = Math.floor(Date.now() / 1000) - 60 * 60;
+        let tm = Math.floor(Date.now() / 1000) - 60 * 30;
         for (let i=0; i < delegates.length; i++) {
             if (tm > delegates[i].timestamp) {
                 delegates[i].status = false;
@@ -42,7 +42,7 @@ class Helper {
 const helper = new Helper();
 
 /** CRON Delegate set inactive **/
-schedule.scheduleJob("1 */50 * * * *", async () => {
+schedule.scheduleJob("1 */45 * * * *", async () => {
     await helper.validateDelegate();
 });
 
@@ -71,9 +71,11 @@ router.get('/delegates', async function (req, res, next) {
 
 
 /** read objs by keys **/
+/*
 router.get('/db/:from/:to', async function (req, res, next) {
     await res.json(await dbUtils.dbObj(db, req.params["from"], req.params["to"]));
 });
+ */
 
 
 module.exports = router;
