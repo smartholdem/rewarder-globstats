@@ -56,10 +56,12 @@ router.post('/', async function (req, res, next) {
     console.log('verification', verification);
     if (verification) {
         req.body.info.timestamp = Math.floor(Date.now() / 1000);
+        /*
         req.body.info.net = {
           ip: ipArr[ipArr.length - 1],
           port: req.body.info.delegate.port
         };
+         */
         await db.put('0x' + req.body.info.delegate.address, req.body.info);
     }
     await res.json(req.body);
