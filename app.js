@@ -10,7 +10,6 @@ process.env.PORT = port;
 console.log("Running on port:", process.env.PORT);
 
 const indexRouter = require('./routes/index');
-const delegatesRouter = require('./routes/delegates');
 const apiRouter = require('./routes/api');
 
 const app = express();
@@ -28,7 +27,6 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', indexRouter);
-app.use('/delegates', delegatesRouter);
 app.use('/api', apiRouter);
 
 module.exports = app;
