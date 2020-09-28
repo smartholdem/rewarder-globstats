@@ -4,7 +4,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 
 const jsonFile = require('jsonfile');
-const port = jsonFile.readFileSync('./config.json').port; // конфиг
+const port = jsonFile.readFileSync('./config.json').port;
 
 process.env.PORT = port;
 console.log("Running on port:", process.env.PORT);
