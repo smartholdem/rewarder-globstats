@@ -42,7 +42,7 @@ class Helper {
 const helper = new Helper();
 
 /** CRON Delegate set inactive **/
-schedule.scheduleJob("1 */45 * * * *", async () => {
+schedule.scheduleJob("1 */29 * * * *", async () => {
     await helper.validateDelegate();
 });
 
