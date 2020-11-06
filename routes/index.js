@@ -48,12 +48,12 @@ schedule.scheduleJob("1 */29 * * * *", async () => {
 
 /* post: new rewarder activation notification */
 router.post('/', async function (req, res, next) {
-    let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    let ipArr = ip.split(':');
+    //let ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    //let ipArr = ip.split(':');
     //console.log(req.connection)
-    console.log(ipArr[ipArr.length - 1], req.body.info.delegate.username);
+    //console.log(ipArr[ipArr.length - 1], req.body.info.delegate.username);
     let verification = await helper.verifyMessage(req.body.rndString, req.body.info.delegate.publicKey, req.body.sig);
-    console.log('verification', verification);
+    console.log('verification', verification, req.body.info.delegate.username);
     if (verification) {
         req.body.info.timestamp = Math.floor(Date.now() / 1000);
         /*
