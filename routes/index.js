@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const sth = require("sthjs");
 const level = require("level");
-const axios = require('axios');
+//const axios = require('axios');
 const db = level('./.db', {valueEncoding: 'json'});
 const crypto = require("crypto");
 const DbUtils = require('../modules/dbUtils');
@@ -28,11 +28,17 @@ class Helper {
 
     async validateDelegate() {
         let delegates = await dbUtils.dbArray(db, '0','1');
-        let tm = Math.floor(Date.now() / 1000) - 60 * 30;
+        const tm = Math.floor(Date.now() / 1000) - 60 * 30;
+        const tmRemove = Math.floor(Date.now() / 1000) - 60 * 60 * 24;
         for (let i=0; i < delegates.length; i++) {
             if (tm > delegates[i].timestamp) {
                 delegates[i].status = false;
                 await db.put('0x' + delegates[i].delegate.address, delegates[i]);
+            }
+
+            if (tmRemove > delegates[i].timestamp) {
+                delegates[i].status = false;
+                await db.del('0x' + delegates[i].delegate.address);
             }
         }
     }
